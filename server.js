@@ -11,14 +11,11 @@ const server = app.listen(port, () => {
 
 
 app.get('/app/', (req, res) => {
-    // Respond with status 200
-        res.statusCode = 200;
-    // Respond with status message "OK"
-        res.statusMessage = 'OK';
-        res.status(200);
-        res.send(res.statusCode + ' ' + res.statusMessage);
-        res.type('text/plain')
-        res.end(res.statusCode+ ' ' +res.statusMessage)
+  res.statusCode = 200;
+  res.statusMessage = 'OK';
+  res.status(200);
+  res.type('text/plain')
+  res.send(res.statusCode + ' ' + res.statusMessage);
 });
 
 function coinFlip() {
@@ -59,32 +56,23 @@ function flipACoin(call) {
 
 app.get('/app/flip/call/heads', (req, res) => {
     ret = flipACoin("heads");
-    res.json(ret);
-    res.statusCode = 200;
-    res.statusMessage = 'OK';
     res.status(200);
     res.type("application/json")
-    res.end(res.statusCode+ ' ' +res.statusMessage)
+    res.json(ret);
 });
 
 app.get('/app/flip/call/tails', (req, res) => {
     ret = flipACoin("tails");
-    res.json(ret);
-    res.statusCode = 200;
-    res.statusMessage = 'OK';
     res.status(200);
     res.type("application/json")
-    res.end(res.statusCode+ ' ' +res.statusMessage)
+    res.json(ret);
 });
 
 app.get('/app/flip/', (req, res) => {
     ret = coinFlip();
-    res.json({flip:ret});
-    res.statusCode = 200;
-    res.statusMessage = 'OK';
     res.status(200);
     res.type("application/json")
-    res.end(res.statusCode+ ' ' +res.statusMessage)
+    res.json({'flip':ret});
 });
 
 app.get('/app/flips/:number', (req, res) => {
@@ -93,15 +81,11 @@ app.get('/app/flips/:number', (req, res) => {
     ret[i] = coinFlip();
   }
   ret_2 = countFlips(ret);
-  res.json({raw:ret, ret_2});
-  res.statusCode = 200;
-  res.statusMessage = 'OK';
   res.status(200);
   res.type("application/json")
-  res.end(res.statusCode+ ' ' +res.statusMessage)
+  res.json({raw:ret, ret_2});
 });
 
 app.use(function(req, res){
-    res.status(404).send('404 NOT FOUND')
-    res.type("text/plain")
+    res.status(404).type("text/plain").send('404 NOT FOUND')
 });
