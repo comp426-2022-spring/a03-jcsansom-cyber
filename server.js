@@ -17,7 +17,7 @@ app.get('/app/', (req, res) => {
         res.statusMessage = 'OK';
         res.status(200);
         res.send(res.statusCode + ' ' + res.statusMessage);
-        res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
+        res.type('text/plain')
         res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
@@ -63,7 +63,7 @@ app.get('/app/flip/call/heads', (req, res) => {
     res.statusCode = 200;
     res.statusMessage = 'OK';
     res.status(200);
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+    res.type("application/json")
     res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
@@ -73,7 +73,7 @@ app.get('/app/flip/call/tails', (req, res) => {
     res.statusCode = 200;
     res.statusMessage = 'OK';
     res.status(200);
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+    res.type("application/json")
     res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
@@ -83,7 +83,7 @@ app.get('/app/flip/', (req, res) => {
     res.statusCode = 200;
     res.statusMessage = 'OK';
     res.status(200);
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+    res.type("application/json")
     res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
@@ -97,14 +97,11 @@ app.get('/app/flips/:number', (req, res) => {
   res.statusCode = 200;
   res.statusMessage = 'OK';
   res.status(200);
-  res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+  res.type("application/json")
   res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
 app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
-    res.statusCode = 404;
-    res.statusMessage = 'NOT FOUND';
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
-    res.end(res.statusCode+ ' ' +res.statusMessage)
+    res.type("text/plain")
 });
