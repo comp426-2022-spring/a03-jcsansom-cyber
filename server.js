@@ -60,16 +60,31 @@ function flipACoin(call) {
 app.get('/app/flip/call/heads', (req, res) => {
     ret = flipACoin("heads");
     res.json(ret);
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.status(200);
+    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+    res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
 app.get('/app/flip/call/tails', (req, res) => {
     ret = flipACoin("tails");
     res.json(ret);
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.status(200);
+    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+    res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
 app.get('/app/flip/', (req, res) => {
     ret = coinFlip();
     res.json({flip:ret});
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.status(200);
+    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+    res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
 app.get('/app/flips/:number', (req, res) => {
@@ -79,8 +94,17 @@ app.get('/app/flips/:number', (req, res) => {
   }
   ret_2 = countFlips(ret);
   res.json({raw:ret, ret_2});
+  res.statusCode = 200;
+  res.statusMessage = 'OK';
+  res.status(200);
+  res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+  res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
 app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
+    res.statusCode = 404;
+    res.statusMessage = 'NOT FOUND';
+    res.writeHead( res.statusCode, { 'Content-Type' : 'text/json' });
+    res.end(res.statusCode+ ' ' +res.statusMessage)
 });
