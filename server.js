@@ -39,7 +39,7 @@ function countFlips(array) {
     if (num_t == 0) {
       return "{ heads: " + num_h + " }";
     }
-    return "{heads: " + num_h + ", tails: " + num_t + " }"
+    return {heads: " + num_h + ", tails: " + num_t + " }
 }
 
 function flipACoin(call) {
@@ -80,10 +80,10 @@ app.get('/app/flips/:number', (req, res) => {
   for (let i = 0; i < req.params.number; i++) {
     ret[i] = coinFlip();
   }
-  ret_2 = countFlips(ret);
+  const ret_2 = countFlips(ret);
   res.status(200);
   res.type("application/json")
-  res.json({raw:ret, ret_2});
+  res.json({'raw': ret, 'summary': ret_2});
 });
 
 app.use(function(req, res){
