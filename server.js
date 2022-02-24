@@ -22,7 +22,7 @@ function coinFlip() {
     return Math.random() < 0.6 ? ("heads") : ("tails")
 }
 
-function countFlips(array) {
+function countFlipsT(array) {
     let num_h = 0;
     let num_t = 0;
     for (let i = 0; i < array.length; i++) {
@@ -33,13 +33,28 @@ function countFlips(array) {
         num_t += 1;
       }
     }
-    if (num_h == 0) {
+    return num_t
+    /*if (num_h == 0) {
       return "{ tails: " + num_t + " }";
     }
     if (num_t == 0) {
       return "{ heads: " + num_h + " }";
     }
-    return {heads: " + num_h + ", tails: " + num_t + " }
+    return "{heads: " + num_h + ", tails: " + num_t + " }"*/
+}
+
+function countFlipsH(array) {
+  let num_h = 0;
+  let num_t = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == "heads") {
+      num_h += 1;
+    }
+    else {
+      num_t += 1;
+    }
+  }
+  return num_h
 }
 
 function flipACoin(call) {
@@ -51,21 +66,35 @@ function flipACoin(call) {
     else {
       ret = "lose";
     }
-    return "{ call: '" + call + "', flip: '" + flip + "', result: '" + ret + "' }";
+    return ret
   }
 
 app.get('/app/flip/call/heads', (req, res) => {
-    ret = flipACoin("heads");
+    let call = coinFlip();
+    let ret="";
+    if (call == "heads") {
+      ret = "win";
+    }
+    else {
+      ret = "lose";
+    }
     res.status(200);
     res.type("application/json")
-    res.json(ret);
+    res.json({'call':'heads','flip':call,'result':ret});
 });
 
 app.get('/app/flip/call/tails', (req, res) => {
-    ret = flipACoin("tails");
-    res.status(200);
-    res.type("application/json")
-    res.json(ret);
+  let call = coinFlip();
+  let ret="";
+  if (call == "tails") {
+    ret = "win";
+  }
+  else {
+    ret = "lose";
+  }
+  res.status(200);
+  res.type("application/json")
+  res.json({'call':'tails','flip':call,'result':ret});
 });
 
 app.get('/app/flip/', (req, res) => {
@@ -80,10 +109,19 @@ app.get('/app/flips/:number', (req, res) => {
   for (let i = 0; i < req.params.number; i++) {
     ret[i] = coinFlip();
   }
-  const ret_2 = countFlips(ret);
+  const num_t = countFlipsT(ret);
+  const num_h = countFlipsH(ret);
   res.status(200);
   res.type("application/json")
-  res.json({'raw': ret, 'summary': ret_2});
+  if (num_t == 0) {
+    res.json({'raw': ret, 'summary': {'heads':num_h}});
+  }
+  else if (num_h == 0) {
+    res.json({'raw': ret, 'summary': {'tails':num_t}});
+  }
+  else {
+  res.json({'raw': ret, 'summary': {'tails':num_t, 'heads':num_h}});
+  }
 });
 
 app.use(function(req, res){
